@@ -18,9 +18,10 @@ const userSlice = createSlice({
    
     addOrUpdateCart : (state,action)=>{
      
-        const isExist = state.carts.find((cart)=> cart.id === action.payload.id);
+        const isExist = state.carts.find((cart)=> cart.product === action.payload.product);
         if(isExist){
-          state.carts = state.carts.map((cart)=>cart.id === action.payload.id ? action.payload : cart)
+          state.carts = state.carts.map((cart)=>cart.product === action.payload.product ? action.payload : cart)
+          setCarts(state.carts)
         }else{
         state.carts = [...state.carts,action.payload];
         setCarts(state.carts);
@@ -43,6 +44,6 @@ const userSlice = createSlice({
 
 
 
-export const {userAddOrUpdate, clearAll , addToCart , updateCart} = userSlice.actions
+export const {userAddOrUpdate, clearAll , addToCart , addOrUpdateCart} = userSlice.actions
 export default userSlice.reducer;
 

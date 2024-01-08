@@ -3,7 +3,7 @@ import { Card, Typography } from "@material-tailwind/react";
 
 
 import { baseUrl } from "../../features/constant";
-import { carts } from "../../dummy/carts";
+import { useSelector } from "react-redux";
 
 
 const CartPage = () => {
@@ -23,6 +23,8 @@ const CartPage = () => {
 
   // const t = tot.reduce((a, b) => a + b.qty * b.price, 0);
   // console.log(t);
+
+  const {carts} = useSelector((store)=> store.user)
 
   const total = carts.reduce((a, b) => {
     return a + b.qty * b.price

@@ -6,6 +6,8 @@ import { Card, Typography, Rating } from "@material-tailwind/react";
 import { useFormik } from "formik";
 
 import { useGetProductByIdQuery } from "../features/productApi";
+import { useDispatch } from "react-redux";
+import { addOrUpdateCart } from "../features/userSlice";
 
 
 
@@ -17,6 +19,7 @@ import { useGetProductByIdQuery } from "../features/productApi";
 const ProductDetail = () => {
 
 const {id} = useParams()
+const dispatch = useDispatch();
 
 const { isLoading, isError, error, data: product } = useGetProductByIdQuery(id);
 
@@ -133,7 +136,14 @@ if(isLoading){
                 <tr className="text-center ">
                   <td colSpan={2}>
                     <button onClick={() => {
-                     
+                      dispatch(addOrUpdateCart({
+                        name: product.product_name,
+                        qty:formik.values.qty,
+                        image:product.product_image,
+                        price:Number(product.product_price),
+                        product: product._id
+                      }));
+                     nav('/user/cart')
                     }} className=' w-[50%] bg-black my-5 text-white mx-auto py-1 rounded-sm'>Add To Cart</button>
 
                   </td>

@@ -5,7 +5,7 @@ import { baseUrl } from "../features/constant";
 import { Card, Typography, Rating } from "@material-tailwind/react";
 import { useFormik } from "formik";
 
-import { product } from "../dummy/products";
+import { useGetProductByIdQuery } from "../features/productApi";
 
 
 
@@ -16,8 +16,9 @@ import { product } from "../dummy/products";
 
 const ProductDetail = () => {
 
+const {id} = useParams()
 
-
+const { isLoading, isError, error, data: product } = useGetProductByIdQuery(id);
 
   const nav = useNavigate();
   const formik = useFormik({
@@ -27,7 +28,10 @@ const ProductDetail = () => {
   });
 
 
+if(isLoading){
+  return <h1>Loading.....</h1>
 
+}
 
 
 

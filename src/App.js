@@ -48,10 +48,12 @@ const App = () => {
           <Route path="user/signUp" element={<SignUp />} />
 
 
-
+          <Route element={<AdminRoutes />}>
           <Route path="products/all" element={<ProductList />} />
           <Route path="product/add" element={<AddProduct />} />
           <Route path="product/:id" element={<EditProduct />} />
+          </Route>
+          
 
           {/* <Route path="user/allDetail" element={<AdminProfile />} /> */}
 

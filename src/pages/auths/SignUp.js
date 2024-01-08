@@ -9,13 +9,14 @@ import { useNavigate } from 'react-router';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { useUserLoginMutation } from '../../features/authApi';
+import { useUserLoginMutation, useUserRegisterMutation } from '../../features/authApi';
 
 
 
 const SignUp = () => {
 
-  const [userSignUp,{isLoading}] = useUserLoginMutation()
+  const [userSignUp,{isLoading}] = useUserRegisterMutation()
+  console.log("signup",useUserLoginMutation)
   const registerSchema = Yup.object().shape({
     fullname: Yup.string().min(5).max(20).required('Required'),
     email: Yup.string().email('Invalid email').required('Required'),
@@ -36,10 +37,12 @@ const SignUp = () => {
     onSubmit:async (val) => {
       try {
         const response = await userSignUp(val).unwrap();
+        console.log("response",response)
         toast.success(`${response?.message}`);
         nav(-1);
       } catch (err) {
         toast.error(`${err?.data}`)
+        console.log("toast err",err)
       }
 
     },

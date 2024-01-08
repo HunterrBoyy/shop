@@ -16,13 +16,20 @@ const userSlice = createSlice({
       state.user = action.payload;
     },
    
-    addToCart : (state,action)=>{
-      setCarts(action.payload);
-      state.carts = [...state.carts,action.payload];
-    },
-    updateCart : (state,action)=>{
+    addOrUpdateCart : (state,action)=>{
      
-    },
+        const isExist = state.carts.find((cart)=> cart.id === action.payload.id);
+        if(isExist){
+          state.carts = state.carts.map((cart)=>cart.id === action.payload.id ? action.payload : cart)
+        }else{
+        state.carts = [...state.carts,action.payload];
+        setCarts(state.carts);
+
+        }
+      }
+     
+    ,
+   
     clearAll : (state,action)=>{
      clearData()
       state.user = null;

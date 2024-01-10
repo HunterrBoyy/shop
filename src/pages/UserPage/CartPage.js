@@ -3,12 +3,13 @@ import { Card, Typography } from "@material-tailwind/react";
 
 
 import { baseUrl } from "../../features/constant";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addOrUpdateCart } from "../../features/userSlice";
 
 
 const CartPage = () => {
 
-
+const dispatch = useDispatch()
 
 
   
@@ -64,7 +65,7 @@ const CartPage = () => {
                     <select
                       value={cart.qty}
                       onChange={(e) => {
-                   
+                        dispatch(addOrUpdateCart({...cart,qty:e.target.value}))
                       }
 
 

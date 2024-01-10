@@ -23,7 +23,7 @@ const userSlice = createSlice({
           state.carts = state.carts.map((cart)=>cart.product === action.payload.product ? action.payload : cart)
           setCarts(state.carts)
         }else{
-        state.carts = [...state.carts,action.payload];
+        state.carts = [...state.carts, action.payload];
         setCarts(state.carts);
 
         }

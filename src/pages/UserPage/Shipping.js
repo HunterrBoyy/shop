@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import { useUserUpdateMutation } from '../../features/authApi';
+import { useSelector } from 'react-redux';
 
 
 
@@ -17,13 +19,14 @@ import * as Yup from 'yup';
 
 const Shipping = () => {
 
-
+  const [update] = useUserUpdateMutation()
   const addressSchema = Yup.object().shape({
     address: Yup.string().required('Required'),
     city: Yup.string().min(5).max(20).required('Required')
 
   });
 
+  const {user} = useSelector((store)=>store.user);
   const nav = useNavigate();
 
 
@@ -36,7 +39,14 @@ const Shipping = () => {
 
     },
     onSubmit: async (val) => {
-
+      try {
+        await update({
+          body:val,
+          token:user.token
+        }).unwrap()
+      } catch (err) {
+        
+      }
 
     },
     validationSchema: addressSchema

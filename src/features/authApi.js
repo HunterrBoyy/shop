@@ -27,6 +27,17 @@ export const authApi = createApi({
       method : 'POST'
     })
     
+   }),
+   userUpdate :builder.mutation({
+    query:(query)=>({
+      url:'/api/userUpdate',
+      body:query.body,
+      method : 'PATCH',
+      headers:{
+        Authorization : query.token
+      }
+    })
+    
    })
 
 
@@ -37,4 +48,4 @@ export const authApi = createApi({
 });
 
 
-export const {useUserLoginMutation, useUserRegisterMutation} = authApi;
+export const {useUserLoginMutation, useUserRegisterMutation, useUserUpdateMutation} = authApi;

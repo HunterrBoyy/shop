@@ -4,11 +4,13 @@ import { Card, Typography } from "@material-tailwind/react";
 
 import { baseUrl } from "../../features/constant";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrUpdateCart } from "../../features/userSlice";
+import { addOrUpdateCart, removeCart } from "../../features/userSlice";
+import { useNavigate } from "react-router";
 
 
 const CartPage = () => {
 
+  const nav = useNavigate()
 const dispatch = useDispatch()
 
 
@@ -25,7 +27,7 @@ const dispatch = useDispatch()
   // const t = tot.reduce((a, b) => a + b.qty * b.price, 0);
   // console.log(t);
 
-  const {carts} = useSelector((store)=> store.user)
+  const {carts, user} = useSelector((store)=> store.user)
 
   const total = carts.reduce((a, b) => {
     return a + b.qty * b.price
@@ -81,7 +83,9 @@ const dispatch = useDispatch()
                 </div>
                 <div className="totals flex flex-col justify-between items-end">
 
-                  <button  > <i className="fa-solid fa-xmark"></i> </button>
+                  <button onClick={()=>{
+                    dispatch(removeCart(i))
+                  }}> <i className="fa-solid fa-xmark"></i> </button>
 
 
                   <p>Total: {cart.qty * cart.price}</p>
@@ -156,7 +160,11 @@ const dispatch = useDispatch()
                 <tr className="text-center ">
                   <td colSpan={2}>
                     <button onClick={() => {
-                      
+                      if(user.shippingAddress.isEmpty){
+                        nav('/user/shipping');
+                      }else{
+
+                      }          
 
 
 

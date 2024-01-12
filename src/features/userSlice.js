@@ -30,7 +30,12 @@ const userSlice = createSlice({
       }
      
     ,
-   
+    removeCart:(state,action)=>{
+      state.carts.splice(action.payload,1);
+      state.carts = [...state.carts];
+      setCarts(state.carts);
+    },
+
     clearAll : (state,action)=>{
      clearData()
       state.user = null;
@@ -44,6 +49,6 @@ const userSlice = createSlice({
 
 
 
-export const {userAddOrUpdate, clearAll , addToCart , addOrUpdateCart} = userSlice.actions
+export const {userAddOrUpdate, clearAll , addToCart , addOrUpdateCart,removeCart} = userSlice.actions
 export default userSlice.reducer;
 

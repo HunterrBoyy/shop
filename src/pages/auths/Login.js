@@ -7,10 +7,10 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from 'react-router';
 import { useFormik } from 'formik';
-import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useUserLoginMutation } from '../../features/authApi';
+import { toast } from 'react-toastify';
 import { userAddOrUpdate } from '../../features/userSlice';
 
 
@@ -31,6 +31,7 @@ const Login = () => {
   });
 
 
+
   const formik = useFormik({
 
     initialValues: {
@@ -38,14 +39,14 @@ const Login = () => {
       password: ''
 
     },
-    onSubmit:async (val) => {
+    onSubmit: async (val) => {
       try {
         const response = await loginUser(val).unwrap();
-        dispatch(userAddOrUpdate(response))
+        dispatch(userAddOrUpdate(response));
         toast.success(`${response?.message}`);
         nav(-1);
       } catch (err) {
-        toast.error(`${err?.data}`)
+        toast.error(`${err?.data}`);
       }
 
     },

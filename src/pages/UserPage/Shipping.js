@@ -10,7 +10,8 @@ import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { useUserUpdateMutation } from '../../features/authApi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { userAddOrUpdate } from '../../features/userSlice';
 
 
 
@@ -19,14 +20,16 @@ import { useSelector } from 'react-redux';
 
 const Shipping = () => {
 
-  const [update] = useUserUpdateMutation()
+  const [update, { isLoading }] = useUserUpdateMutation();
   const addressSchema = Yup.object().shape({
     address: Yup.string().required('Required'),
     city: Yup.string().min(5).max(20).required('Required')
 
   });
 
-  const {user} = useSelector((store)=>store.user);
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((store) => store.user);
   const nav = useNavigate();
 
 
@@ -40,12 +43,19 @@ const Shipping = () => {
     },
     onSubmit: async (val) => {
       try {
-        await update({
-          body:val,
-          token:user.token
-        }).unwrap()
+        const response = await update({
+          body: {
+            shippingAddress: { ...val, isEmpty: false }
+          },
+          token: user.token
+        }).unwrap();
+        dispatch(userAddOrUpdate({ ...user, shippingAddress: { ...val, isEmpty: false } }))
+
+        toast.success(`${response}`);
+        nav(-1);
       } catch (err) {
-        
+
+        toast.error(`${err?.data}`);
       }
 
     },
@@ -79,12 +89,12 @@ const Shipping = () => {
           {formik.errors.city && formik.touched.city && <h1 className='text-pink-700'>{formik.errors.city}</h1>}
         </div>
 
-        {/* {isLoading ? <Button type='submit' className="mt-6" fullWidth>
+        {isLoading ? <Button type='submit' className="mt-6" fullWidth>
           <div className='h-7 w-7 border-2 border-t-blue-gray-900 rounded-full animate-spin mx-auto '></div>
         </Button> : <Button type='submit' className="mt-6" fullWidth>
           Submit
         </Button>
-        } */}
+        }
 
 
 

@@ -8,25 +8,45 @@ import {
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { toast } from "react-toastify";
+import { useUserUpdateMutation } from "../../features/authApi";
+import { userAddOrUpdate } from "../../features/userSlice";
+import { useDispatch } from "react-redux";
 
-const UpdateForm = () => {
-
+const UpdateForm = ({ user }) => {
+  const [update, { isLoading }] = useUserUpdateMutation();
   const userSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
     fullname: Yup.string().min(5).max(20).required('Required')
 
   });
 
+  const dispatch = useDispatch();
 
 
-  let user;
+
+
   const formik = useFormik({
     initialValues: {
       email: user?.email,
       fullname: user?.fullname
     },
     onSubmit: async (val) => {
+      try {
+        const response = await update({
+          body: {
+            email: val.email,
+            fullname: val.fullname
+          },
+          token: user.token
+        }).unwrap();
+        dispatch(userAddOrUpdate({ ...user, email: val.email, fullname: val.fullname }))
 
+        toast.success(`${response}`);
+
+      } catch (err) {
+
+        toast.error(`${err?.data}`);
+      }
 
     },
     validationSchema: userSchema
@@ -61,12 +81,12 @@ const UpdateForm = () => {
 
           </div>
 
-          {/* {isLoading ? <Button type='submit' className="mt-6" fullWidth>
+          {isLoading ? <Button type='submit' className="mt-6" fullWidth>
             <div className='h-7 w-7 border-2 border-t-blue-gray-900 rounded-full animate-spin mx-auto '></div>
           </Button> : <Button type='submit' className="mt-6" fullWidth>
             Update
           </Button>
-          } */}
+          }
 
 
         </form>

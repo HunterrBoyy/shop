@@ -9,7 +9,7 @@ import { productApi } from "./productApi";
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-     [productApi.reducerPath]: productApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
     // [orderApi.reducerPath]: orderApi.reducer,
     user: userReducer
   },

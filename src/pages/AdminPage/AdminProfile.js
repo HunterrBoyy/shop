@@ -30,7 +30,7 @@ const AdminProfile = () => {
     <div className="grid grid-cols-3 gap-9 px-4 py-4">
 
       <div>
-        <UpdateForm />
+        <UpdateForm user={user} />
       </div>
 
 

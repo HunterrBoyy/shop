@@ -1,9 +1,11 @@
 
 import { useParams } from "react-router";
-import { orders } from "../../dummy/order";
+
 import { baseUrl } from "../../features/constant";
-import { useOrderByIdQuery } from "../../features/orderApi";
+
 import { useSelector } from "react-redux";
+import { useGetOrderByIdQuery } from "../../features/productApi";
+
 
 const OrderDetail = () => {
 
@@ -11,7 +13,7 @@ const OrderDetail = () => {
 
   const { user } = useSelector((store) => store.user);
 
-  const { isLoading, isError, error, data } = useOrderByIdQuery({
+  const { isLoading, isError, error, data } = useGetOrderByIdQuery({
     id,
     token: user.token
   });
@@ -53,7 +55,7 @@ const OrderDetail = () => {
 
       <div className="bg-black text-white flex justify-between py-2 px-5 mt-10">
         <h1 className="text-xl">Total:-</h1>
-        <h1>Rs. {data.totalPrice}</h1>
+        <h1>Rs. {data.totalAmount}</h1>
 
       </div>
 

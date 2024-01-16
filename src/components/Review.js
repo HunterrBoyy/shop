@@ -14,7 +14,7 @@ import { useReviewProductMutation } from "../features/productApi";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
-const Review = ({ product }) => {
+const Review = ({ product , isShow}) => {
 
 
 
@@ -54,7 +54,7 @@ const Review = ({ product }) => {
 
       } catch (err) {
 
-        toast.error(err.data.message);
+        toast.error(err.data);
       }
 
 
@@ -69,9 +69,9 @@ const Review = ({ product }) => {
 
   return (
     <div className="p-5 ">
-      <h1 className="text-xl font-semibold tracking-wider mb-2">Add Reviews</h1>
+     {!isShow && <h1 className="text-xl font-semibold tracking-wider mb-2">Add Reviews</h1>}
 
-      <form onSubmit={formik.handleSubmit} className="space-y-4 ">
+     {!isShow && <form onSubmit={formik.handleSubmit} className="space-y-4 ">
         <div className="w-96">
           <Textarea
 
@@ -103,7 +103,7 @@ const Review = ({ product }) => {
         }
 
 
-      </form>
+      </form>}
 
       <div className="my-7">
         <hr />

@@ -24,7 +24,15 @@ import UserRoute from './components/UserRoute';
 
 
 const App = () => {
+  // const person = {
+  //   name: 'ram',
+  //   age: 90
+  // };
 
+  // const m = { ...person, age: 70 };
+  // console.log(m);
+
+  // console.log([...Array(9).keys()]);
   // const reviews = [
   //   { name: 'hari', rating: 5 },
   //   { name: 'shyam', rating: 4 },
@@ -48,23 +56,31 @@ const App = () => {
           <Route path="user/signUp" element={<SignUp />} />
 
 
-          <Route element={<AdminRoutes />}>
-          <Route path="products/all" element={<ProductList />} />
-          <Route path="product/add" element={<AddProduct />} />
-          <Route path="product/:id" element={<EditProduct />} />
-          </Route>
-          
 
-          {/* <Route path="user/allDetail" element={<AdminProfile />} /> */}
+          <Route element={<AdminRoutes />}>
+            <Route path="products/all" element={<ProductList />} />
+            <Route path="product/add" element={<AddProduct />} />
+            <Route path="product/:id" element={<EditProduct />} />
+            <Route path="user/allDetail" element={<AdminProfile />} />
+          </Route>
+
+
+
 
 
           <Route path="product/detail/:id" element={<ProductDetail />} />
 
-          <Route path='user/cart' element={<CartPage />} />
-          <Route path='user/shipping' element={<Shipping />} />
-          {/* <Route path='/user/checkout' element={<OrderPage />} />
-          <Route path='/user/profile' element={<UserProfile />} />
-          <Route path='/user/order/:id' element={<OrderDetail />} /> */}
+
+
+          <Route element={<UserRoute />}>
+            <Route path='user/cart' element={<CartPage />} />
+            <Route path='user/shipping' element={<Shipping />} />
+            <Route path='/user/checkout' element={<OrderPage />} />
+            <Route path='/user/profile' element={<UserProfile />} />
+            <Route path='/user/order/:id' element={<OrderDetail />} />
+          </Route>
+
+
 
 
 

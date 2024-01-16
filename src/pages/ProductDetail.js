@@ -6,8 +6,9 @@ import { Card, Typography, Rating } from "@material-tailwind/react";
 import { useFormik } from "formik";
 
 import { useGetProductByIdQuery } from "../features/productApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addOrUpdateCart } from "../features/userSlice";
+import Review from "../components/Review";
 
 
 
@@ -18,10 +19,11 @@ import { addOrUpdateCart } from "../features/userSlice";
 
 const ProductDetail = () => {
 
-const {id} = useParams()
-const dispatch = useDispatch();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { isLoading, isError, error, data: product } = useGetProductByIdQuery(id);
+  const { user } = useSelector((store) => store.user);
 
-const { isLoading, isError, error, data: product } = useGetProductByIdQuery(id);
 
   const nav = useNavigate();
   const formik = useFormik({
@@ -31,10 +33,9 @@ const { isLoading, isError, error, data: product } = useGetProductByIdQuery(id);
   });
 
 
-if(isLoading){
-  return <h1>Loading.....</h1>
-
-}
+  if (isLoading) {
+    return <h1>Loading....</h1>
+  }
 
 
 
@@ -102,14 +103,14 @@ if(isLoading){
                   </td>
                   <td className="p-4 border-b border-blue-gray-50 bg-blue-gray-50/50">
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {product.countInStock}
+                      {product.countInStock > 0 ? product.countInStock : <h1>Out Of Stock</h1>}
                     </Typography>
                   </td>
 
 
 
                 </tr>
-                <tr className="text-center">
+                {product.countInStock !== 0 && <tr className="text-center">
                   <td className="p-4 border-b border-blue-gray-50">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       Qty
@@ -117,34 +118,39 @@ if(isLoading){
                   </td>
                   <td className="p-4 border-b border-blue-gray-50 bg-blue-gray-50/50">
                     <Typography variant="small" color="blue-gray" className="font-normal">
+
                       <select onChange={(e) => formik.setFieldValue('qty', e.target.value)} className="p-2" name="" id="">
 
                         {[...Array(product.countInStock).keys()].map((v, i) => {
                           return <option key={i} value={v + 1}>{v + 1}</option>
                         })}
                       </select>
+
+
+
                     </Typography>
                   </td>
 
 
 
-                </tr>
+                </tr>}
 
 
 
 
                 <tr className="text-center ">
                   <td colSpan={2}>
-                    <button onClick={() => {
+                    <button disabled={product.countInStock === 0 ? true : false} onClick={() => {
                       dispatch(addOrUpdateCart({
                         name: product.product_name,
-                        qty:Number(formik.values.qty),
-                        image:product.product_image,
-                        price:product.product_price,
+                        qty: Number(formik.values.qty),
+                        image: product.product_image,
+                        price: product.product_price,
                         product: product._id,
                         countInStock: product.countInStock
                       }));
-                     nav('/user/cart')
+                      nav('/user/cart');
+
                     }} className=' w-[50%] bg-black my-5 text-white mx-auto py-1 rounded-sm'>Add To Cart</button>
 
                   </td>
@@ -165,7 +171,7 @@ if(isLoading){
 
 
 
-      {/* {!user.isAdmin && <Review product={product} />} */}
+       <Review isShow= {user?.isAdmin} product={product} />
 
 
 

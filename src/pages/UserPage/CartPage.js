@@ -21,7 +21,7 @@ const CartPage = () => {
   // ];
 
   // tot = tot.map((t) => t.id == 1 ? {} : t);
-  // console.log(tot);
+  // console.log("tot",tot);
 
   // const t = tot.reduce((a, b) => a + b.qty * b.price, 0);
   // console.log(t);

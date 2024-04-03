@@ -30,6 +30,7 @@ const TABLE_HEAD = ["Products", "Price", "Created At", "Edit", "Delete"];
 const ProductList = () => {
 
   const { isLoading, isError, data, error } = useGetAllProductsQuery();
+  console.log("data", data, typeof data)
 
   if (isLoading) {
 

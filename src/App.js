@@ -51,13 +51,15 @@ const App = () => {
 
           <Route index element={<HomePage />} />
 
+          <Route element={<RouteUser/>}>
 
           <Route path="user/login" element={<Login />} />
           <Route path="user/signUp" element={<SignUp />} />
+         </Route>
 
 
 
-          <Route element={<AdminRoutes />}>
+         <Route element={<AdminRoutes />}>
             <Route path="products/all" element={<ProductList />} />
             <Route path="product/add" element={<AddProduct />} />
             <Route path="product/:id" element={<EditProduct />} />

@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./authApi";
 import userReducer from './userSlice';
 import { productApi } from "./productApi";
-// import { orderApi } from "./orderApi";
 
 
 

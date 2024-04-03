@@ -20,7 +20,7 @@ const UserProfile = () => {
 
   const { isLoading, isError, data: orders } = useGetOrderByUserQuery(user.token);
 
-
+  console.log("orders",orders)
 
   if (isLoading) {
     return <h1>Loading....</h1>

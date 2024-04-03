@@ -6,7 +6,7 @@ import { useGetAllProductsQuery } from '../features/productApi';
 const HomePage = () => {
 
   const { isLoading, isError, data, error } = useGetAllProductsQuery();
-
+ console.log(data)
 
 
   if (isLoading) {

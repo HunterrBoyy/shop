@@ -24,24 +24,7 @@ import UserRoute from './components/UserRoute';
 
 
 const App = () => {
-  // const person = {
-  //   name: 'ram',
-  //   age: 90
-  // };
-
-  // const m = { ...person, age: 70 };
-  // console.log(m);
-
-  // console.log([...Array(9).keys()]);
-  // const reviews = [
-  //   { name: 'hari', rating: 5 },
-  //   { name: 'shyam', rating: 4 },
-  //   { name: 'sita', rating: 3 },
-  //   { name: 'hari', rating: 5 },
-
-  // ];
-  // const total = reviews.reduce((a, b) => a + b.rating, 0);
-  // console.log(total / reviews.length);
+  
 
 
   return (
